@@ -143,26 +143,26 @@ SC68BackendAdapter = (function(){ var $this = function () {
 			var numAttr= 7;
 			ret = this.Module.ccall('emu_get_track_info', 'number', ['number'], [track]);			
 			var array = this.Module.HEAP32.subarray(ret>>2, (ret>>2)+numAttr);
-			return parseInt(this.Module.Pointer_stringify(array[5]));
+			return parseInt(this.Module.UTF8ToString(array[5]));
 		},
 		updateSongInfo: function(filename, result) {
 			var numAttr= 7;
 			ret = this.Module.ccall('emu_get_track_info', 'number', ['number'], [this._currentTrack]);
 			
 			var array = this.Module.HEAP32.subarray(ret>>2, (ret>>2)+numAttr);
-			result.title= this.Module.Pointer_stringify(array[0]);
-			result.author= this.Module.Pointer_stringify(array[1]);
-			result.composer= this.Module.Pointer_stringify(array[2]);
-			result.replay= this.Module.Pointer_stringify(array[3]);
-			result.hwname= this.Module.Pointer_stringify(array[4]);
-			result.songInMillis= parseInt(this.Module.Pointer_stringify(array[5]));
-			result.numberOfTracks= parseInt(this.Module.Pointer_stringify(array[6]));
+			result.title= this.Module.UTF8ToString(array[0]);
+			result.author= this.Module.UTF8ToString(array[1]);
+			result.composer= this.Module.UTF8ToString(array[2]);
+			result.replay= this.Module.UTF8ToString(array[3]);
+			result.hwname= this.Module.UTF8ToString(array[4]);
+			result.songInMillis= parseInt(this.Module.UTF8ToString(array[5]));
+			result.numberOfTracks= parseInt(this.Module.UTF8ToString(array[6]));
 		},
 		
 		// --------------------------- async file loading stuff -------------------------
 
 		mapBackendFilename: function (name) {
-			var input= this.Module.Pointer_stringify(name);
+			var input= this.Module.UTF8ToString(name);
 			
 			if (input && (input in this._replayCache)) {
 				this.setCachedReplay(input);
